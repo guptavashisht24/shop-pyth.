@@ -23,3 +23,5 @@ class Bill(models.Model):
 
     def __str__(self):
         return self.party+','+str(self.inovice)+','+str(self.amount)
+    def bill_id(self):
+        return self.id;

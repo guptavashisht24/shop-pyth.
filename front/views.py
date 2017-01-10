@@ -24,6 +24,7 @@ def commitvalues(request):
         form = DForm(request.POST)
         if form.is_valid():
             Description = form.save()
+            print Description
             return HttpResponse("Hello;You're at the front index.Commit's done!")
         print form.errors
         return HttpResponse("Fail")
@@ -33,6 +34,6 @@ def commitbill(request):
         form = BForm(request.POST)
         if form.is_valid():
             Bill = form.save()
-            return HttpResponse("Hello;You're at the front index.Commit's done!")
+            return HttpResponse(str(Bill.bill_id()))
         print form.errors
-        return HttpResponse("Fail")
+        return HttpResponse("fail")
