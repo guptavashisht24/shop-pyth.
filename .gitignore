@@ -16,3 +16,5 @@ shop/__init__.pyc
 shop/settings.pyc
 shop/urls.pyc
 shop/wsgi.pyc
+front/*.pyc
+shop/*.pyc
