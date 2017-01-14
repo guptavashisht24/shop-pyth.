@@ -1,70 +1,170 @@
 {% load staticfiles %}
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-   
-    <title></title>
-    <link href="{%static "./styles/bootstrap.min.css" %}" rel="stylesheet" />
-</head>
-<body>
-    <h1>Rahul's Shop</h1>
-    <form action ="{% url 'front:commit' %}" method = "post" class="form-horizontal" >
-     {% csrf_token %}
-     <div class="form-group">
-            <label for="id" class="control-label col-md-3">Description:</label>
-            <div class="col-md-4">
-                <input type="text" class="form-control" name="desc" id="desc" placeholder="Description" /> 
-            </div>
-            <div class="col-md-5">
-               <span id="one" style="position:relative; top:5px; color:red "></span> 
-            </div>    
-        </div>
-        <div class="form-group">
-            <label for="Bill" class="control-label col-md-3">Bill:</label>
-            <div class="col-md-4">
-                <input type="number" class="form-control" name="bill" id="bill" placeholder="BILL" /> 
-            </div>
-            <div class="col-md-5">
-               <span id="two" style="position:relative; top:5px; color:red "></span> 
-            </div>    
-        </div>
-        <div class="form-group">
-            <label for="Length" class="control-label col-md-3">Length:</label>
-            <div class="col-md-4">
-                <input type="number" class="form-control" name="length" id="length" placeholder="Length" />
-            </div>
-            <div class="col-md-5">
-               <span id="three" style="position:relative; top:5px; color:red "></span> 
-            </div>   
-        </div>
-        <div class="form-group">
-            <label for="Quality" class="control-label col-md-3">Quality:</label>
-            <div class="col-md-4">
-                <input type="text" class="form-control" name="quality" id="quality" placeholder="Quality" />
-            </div>
-            <div class="col-md-5">
-               <span id="four" style="position:relative; top:5px; color:red "></span> 
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="Rate" class="control-label col-md-3">Rate:</label>
-            <div class="col-md-4">
-                <input type="number" class="form-control" name="rate" id="rate" placeholder="Rate" />
-            </div>
-            <div class="col-md-5">
-               <span id="four" style="position:relative; top:5px; color:red "></span> 
-            </div>
-        </div>
-        <div class="container">
-            <div class="row">
-                <input type="submit" class="col-md-offset-5 col-md-2  btn btn-success" value="Submit">
-            </div>
-        </div>
-    </form>
-<script src="{%static "scripts/jquery-2.1.4.min.js" %}"></script>
-<script src="{%static "scripts/bootstrap.min.js" %}"></script>
-</body>
+<html>
+    <head>
 
+        <title></title>
+        <link href="{%static "./styles/bootstrap.min.css" %}" rel="stylesheet" />
+    </head>
+    <body>
+        <h1 style="text-align: center;">Rahul's Shop</h1>
+        <h2 style="text-align: center;">Inventory</h2>
+        
+            <form  enctype="multipart/form-data" id="bill" action ="{% url 'front:commitbill' %}" method = "post" class="form-horizontal">
+             
+            {% csrf_token %}
 
+            <!--{% for field in form %}
+                <div class="form-group">
+                <label for="party" class="control-label col-md-3">{{ field.name }}</label>
+                <div class="col-md-4">
+                    {{ field }}
+                </div>
+                <div class="col-md-5">
+                    <span id="one" style="position:relative; top:5px; color:red "></span>
+                </div>
+            </div>
+            {% endfor %}
+           -->
+            {{ form.as_tabble }}
+            <div class="container">
+                <div class="row">
+                    <input type="button" id="add_items" class="col-md-offset-5 col-md-2  btn btn-success" value="Add items" \>
+                </div>
+            </div>
+         
+        </form>
+        <div id="items" style="margin-top: 50px;" class="container">
+            <form id="item0" action ="{% url 'front:inventory' %}" method = "post" class="form-horizontal" style="border-top:1px solid
+                black;">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label class="control-label col-md-3">Item 1</label>
+                </div>
+                <div class="form-group">
+                    <label for="desc" class="control-label col-md-3">Description:</label>
+                    <div class="col-md-4">
+                        <input type="text" class="form-control" name="desc" id="desc" placeholder="Description" required />
+                    </div>
+                    <div class="col-md-5">
+                        <span id="one" style="position:relative; top:5px; color:red "></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="billing" class="control-label col-md-3">Bill:</label>
+                    <div class="col-md-4">
+                        <input type="number" class="form-control" name="billing" id="billing" placeholder="BILL" required />
+                    </div>
+                    <div class="col-md-5">
+                        <span id="two" style="position:relative; top:5px; color:red "></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="length" class="control-label col-md-3">Length:</label>
+                    <div class="col-md-4">
+                        <input type="number" class="form-control" name="length" id="length" placeholder="Length" required />
+                    </div>
+                    <div class="col-md-5">
+                        <span id="three" style="position:relative; top:5px; color:red "></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="Quality" class="control-label col-md-3">Quality:</label>
+                    <div class="col-md-4">
+                        <input type="text" class="form-control" name="quality" id="quality" placeholder="Quality" required />
+                    </div>
+                    <div class="col-md-5">
+                        <span id="four" style="position:relative; top:5px; color:red "></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="Rate" class="control-label col-md-3">Rate:</label>
+                    <div class="col-md-4">
+                        <input type="number" class="form-control" name="rate" id="rate" placeholder="Rate" required />
+                    </div>
+                    <div class="col-md-5">
+                        <span id="four" style="position:relative; top:5px; color:red "></span>
+                    </div>
+                </div>
+            </form>
+            <div class="container">
+                <div class="row">
+                    <button id="submit" class="col-md-offset-5 col-md-2 btn btn-success">Submit </button>
+                </div>
+            </div>
+        </div>
+        <script src="{%static "scripts/jquery-2.1.4.min.js" %}"></script>
+        <script src="{%static "scripts/bootstrap.min.js" %}"></script>
+        <script type="text/javascript" charset="utf-8">
+            count = 1;
+            $("#add_items").click(function(){
+                $("#items").prepend($("#item0").clone().attr("id","item"+count));
+                $($("#item"+count+" label")[0]).html("Item "+(count+1));
+                count++;
+            });
 
+            flag = 0;
+            $("#submit").click(function(){
+                        inputs = $("input");
 
+                        for (i = 0; i < inputs.length; i++)
+                        {
+                            if(inputs[i].required && inputs[i].value=="" && inputs[i].name!="bill")
+                            {
+                                $(inputs[i]).css("border","1px solid red");
+                                flag = 1;
+                            }
+                        }
 
+                        if (flag)
+                            return false;
+
+                        flag = 0;
+
+                        frm_bill = $('#bill');
+                        bill_id = undefined;
+                        $.ajax({
+                            type: frm_bill.attr('method'),
+                            url: frm_bill.attr('action'),
+                            data: frm_bill.serialize(),
+                            success: function (data)
+                            {
+                                bill_id = +data;
+                                for (i = 0; i < inputs.length; i++)
+                                {
+                                    if(inputs[i].name=="bill")
+                                        inputs[i].value = bill_id;
+                                }
+
+                                for(i = 0; i < count; i++)
+                                {
+                                    frm = $("#item"+i);
+                                    $.ajax({
+                                        type: frm.attr('method'),
+                                        url: frm.attr('action'),
+                                        data: frm.serialize(),
+                                        success: function (data)
+                                        {
+                                            console.log(data);
+                                            frm.remove();
+                                        },
+                                        error: function(data)
+                                        {
+                                            flag = 1;
+                                        }
+                                    })
+                                }
+
+                                if(!flag)
+                                {
+                                    frm_bill.remove();
+                                    $("#submit").remove();
+                                }
+                            },
+                            error: function(data)
+                            {
+                                console.log(data);
+                            }
+                        });
+            });
+        </script>
+    </body>

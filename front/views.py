@@ -30,10 +30,15 @@ def commitvalues(request):
         return HttpResponse("Fail")
 
 def commitbill(request):
+    form = BForm()
     if request.method == "POST":
-        form = BForm(request.POST)
+        form = BForm(request.POST,request.FILES)
         if form.is_valid():
             Bill = form.save()
             return HttpResponse(str(Bill.bill_id()))
-        print form.errors
-        return HttpResponse("fail")
+        else:
+             print form.errors
+             form = BForm()
+    return render(request, 'front/index.html', {
+        'form': form
+    })

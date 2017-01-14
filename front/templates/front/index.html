@@ -8,41 +8,30 @@
     <body>
         <h1 style="text-align: center;">Rahul's Shop</h1>
         <h2 style="text-align: center;">Inventory</h2>
-        <form id="bill" action ="{% url 'front:commitbill' %}" method = "post" class="form-horizontal">
+        
+            <form  enctype="multipart/form-data" id="bill" action ="{% url 'front:commitbill' %}" method = "post" class="form-horizontal">
+             
             {% csrf_token %}
-            <div class="form-group">
-                <label for="party" class="control-label col-md-3">Party:</label>
+
+            <!--{% for field in form %}
+                <div class="form-group">
+                <label for="party" class="control-label col-md-3">{{ field.name }}</label>
                 <div class="col-md-4">
-                    <input type="text" class="form-control" name="party" id="party" placeholder="Party" required />
+                    {{ field }}
                 </div>
                 <div class="col-md-5">
                     <span id="one" style="position:relative; top:5px; color:red "></span>
                 </div>
             </div>
-            <div class="form-group">
-                <label for="inovice" class="control-label col-md-3">Inovice#:</label>
-                <div class="col-md-4">
-                    <input type="number" class="form-control" name="inovice" id="inovice" placeholder="Inovice" required />
-                </div>
-                <div class="col-md-5">
-                    <span id="two" style="position:relative; top:5px; color:red "></span>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="amount" class="control-label col-md-3">Amount:</label>
-                <div class="col-md-4">
-                    <input type="number" class="form-control" name="amount"
-                                                              id="amount" placeholder="Amount" required />
-                </div>
-                <div class="col-md-5">
-                    <span id="three" style="position:relative; top:5px; color:red "></span>
-                </div>
-            </div>
+            {% endfor %}
+           -->
+            {{ form.as_table }}
             <div class="container">
                 <div class="row">
                     <input type="button" id="add_items" class="col-md-offset-5 col-md-2  btn btn-success" value="Add items" \>
                 </div>
             </div>
+         
         </form>
         <div id="items" style="margin-top: 50px;" class="container">
             <form id="item0" action ="{% url 'front:inventory' %}" method = "post" class="form-horizontal" style="border-top:1px solid
@@ -61,9 +50,9 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="bill" class="control-label col-md-3">Bill:</label>
+                    <label for="billing" class="control-label col-md-3">Bill:</label>
                     <div class="col-md-4">
-                        <input type="number" class="form-control" name="bill" id="bill" placeholder="BILL" required />
+                        <input type="number" class="form-control" name="billing" id="billing" placeholder="BILL" required />
                     </div>
                     <div class="col-md-5">
                         <span id="two" style="position:relative; top:5px; color:red "></span>
