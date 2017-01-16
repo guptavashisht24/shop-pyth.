@@ -120,6 +120,7 @@
             $("#add_items").click(function(){
                 $("#items").prepend($("#item0").clone().attr("id","item"+count));
                 $($("#item"+count+" label")[0]).html("Item "+(count+1));
+                $("#item"+count+" input").val(undefined);
                 count++;
             });
 
@@ -171,6 +172,7 @@
                                         data: frm.serialize(),
                                         success: function (data)
                                         {
+                                            frm.append("<label class='col-md-3'> ID:"+data+"</label>")
                                             console.log(data);
                                             //frm.remove();
                                         },
@@ -183,8 +185,8 @@
 
                                 if(!flag)
                                 {
-                                    //frm_bill.remove();
-                                    //$("#submit").remove();
+                                    frm_bill.remove();
+                                    $("#submit").remove();
                                 }
                             },
                             error: function(data)

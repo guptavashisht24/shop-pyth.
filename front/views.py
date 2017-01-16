@@ -4,7 +4,8 @@ from .models import Description, Bill
 from django.http import Http404
 from .forms import DForm
 from .forms import BForm
-import pprint
+from django.core.cache import cache
+
 # Create your views here.
 def index(request):
     context = {}
@@ -23,9 +24,11 @@ def commitvalues(request):
     if request.method == "POST":
         form = DForm(request.POST)
         if form.is_valid():
-            Description = form.save()
-            print Description
-            return HttpResponse("Hello;You're at the front index.Commit's done!")
+            description = form.save()
+            new_id = cache.get('today')+str(cache.get('description'))
+            cache.incr('description')
+            Description.objects.filter(pk=description.id).update(id=int(new_id))
+            return HttpResponse(new_id)
         print form.errors
         return HttpResponse("Fail")
 
@@ -34,9 +37,11 @@ def commitbill(request):
         form = BForm(request.POST, request.FILES)
         if form.is_valid():
             handle_uploaded_image(request.FILES['bill_image'])
-            print form
-            Bill = form.save()
-            return HttpResponse(str(Bill.bill_id()))
+            bill = form.save()
+            new_id = cache.get('today')+str(cache.get('bill'))
+            cache.incr('bill')
+            Bill.objects.filter(pk=bill.id).update(id=int(new_id))
+            return HttpResponse(new_id)
         print form.errors
         return HttpResponse("fail")
 
