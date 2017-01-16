@@ -2,14 +2,13 @@
 <html>
     <head>
 
-        <title></title>
+        <title>Pbd</title>
         <link href="{%static "./styles/bootstrap.min.css" %}" rel="stylesheet" />
     </head>
     <body>
         <h1 style="text-align: center;">Rahul's Shop</h1>
         <h2 style="text-align: center;">Inventory</h2>
-        <form id="bill" action ="{% url 'front:commitbill' %}" method = "post" class="form-horizontal">
-            {% csrf_token %}
+        <form id="bill" action ="{% url 'front:commitbill' %}" method = "post" class="form-horizontal" enctype="multipart/form-data"> {% csrf_token %}
             <div class="form-group">
                 <label for="party" class="control-label col-md-3">Party:</label>
                 <div class="col-md-4">
@@ -20,9 +19,9 @@
                 </div>
             </div>
             <div class="form-group">
-                <label for="inovice" class="control-label col-md-3">Inovice#:</label>
+                <label for="invoice" class="control-label col-md-3">Invoice#:</label>
                 <div class="col-md-4">
-                    <input type="number" class="form-control" name="inovice" id="inovice" placeholder="Inovice" required />
+                    <input type="number" class="form-control" name="invoice" id="invoice" placeholder="Invoice" required />
                 </div>
                 <div class="col-md-5">
                     <span id="two" style="position:relative; top:5px; color:red "></span>
@@ -38,12 +37,23 @@
                     <span id="three" style="position:relative; top:5px; color:red "></span>
                 </div>
             </div>
-            <div class="container">
-                <div class="row">
-                    <input type="button" id="add_items" class="col-md-offset-5 col-md-2  btn btn-success" value="Add items" \>
+            <div class="form-group">
+                <label for="bill_image" class="control-label col-md-3">Bill
+                    Image:</label>
+                <div class="col-md-4">
+                    <input type="file" class="form-control" name="bill_image" id="bill_image"
+                                                              accept="image/*" placeholder="Bill Image" required />
+                </div>
+                <div class="col-md-5">
+                    <span id="three" style="position:relative; top:5px; color:red "></span>
                 </div>
             </div>
         </form>
+        <div class="container">
+            <div class="row">
+                <input type="button" id="add_items" class="col-md-offset-5 col-md-2  btn btn-success" value="Add items" \>
+            </div>
+        </div>
         <div id="items" style="margin-top: 50px;" class="container">
             <form id="item0" action ="{% url 'front:inventory' %}" method = "post" class="form-horizontal" style="border-top:1px solid
                 black;">
@@ -133,10 +143,16 @@
 
                         frm_bill = $('#bill');
                         bill_id = undefined;
+                        bill_image = frm_bill[0].bill_image;
+                        bill_data = new FormData(frm_bill[0]); 
+                        bill_data.append('bill_name', bill_image.files[0].name)
                         $.ajax({
                             type: frm_bill.attr('method'),
                             url: frm_bill.attr('action'),
-                            data: frm_bill.serialize(),
+                            enctype: frm_bill.attr('enctype'),
+                            data: bill_data,
+                            processData: false,
+                            contentType: false,
                             success: function (data)
                             {
                                 bill_id = +data;
@@ -156,7 +172,7 @@
                                         success: function (data)
                                         {
                                             console.log(data);
-                                            frm.remove();
+                                            //frm.remove();
                                         },
                                         error: function(data)
                                         {
@@ -167,8 +183,8 @@
 
                                 if(!flag)
                                 {
-                                    frm_bill.remove();
-                                    $("#submit").remove();
+                                    //frm_bill.remove();
+                                    //$("#submit").remove();
                                 }
                             },
                             error: function(data)

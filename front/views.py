@@ -31,9 +31,17 @@ def commitvalues(request):
 
 def commitbill(request):
     if request.method == "POST":
-        form = BForm(request.POST)
+        form = BForm(request.POST, request.FILES)
         if form.is_valid():
+            handle_uploaded_image(request.FILES['bill_image'])
+            print form
             Bill = form.save()
             return HttpResponse(str(Bill.bill_id()))
         print form.errors
         return HttpResponse("fail")
+
+def handle_uploaded_image(f):
+    with open('front/media/'+f.__str__(), 'wb+') as destination:
+        for chunk in f.chunks():
+            destination.write(chunk)
+    destination.close()

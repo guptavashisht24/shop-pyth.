@@ -17,11 +17,13 @@ class Description(models.Model):
         return self.desc
 
 class Bill(models.Model):
-    party = models.CharField(max_length = 200)
-    inovice = models.FloatField(max_length = 200)
+    party = models.CharField(max_length = 200, default = "none")
+    invoice = models.FloatField(max_length = 200)
     amount = models.FloatField(max_length = 200)
+    bill_name = models.CharField(max_length = 200, default = "none")
 
     def __str__(self):
-        return self.party+','+str(self.inovice)+','+str(self.amount)
+        return self.party+','+str(self.invoice)+','+str(self.amount)+','+self.bill_name
+
     def bill_id(self):
         return self.id;

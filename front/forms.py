@@ -12,4 +12,4 @@ class BForm(forms.ModelForm):
     class Meta:
         db_table = 'inventory_bill'
         model = Bill
-        fields = ('party', 'inovice', 'amount')
+        fields = ('party', 'invoice', 'amount', 'bill_name')
