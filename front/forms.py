@@ -1,6 +1,5 @@
 from django import forms
-
-from .models import Description, Bill
+from .models import Description, Bill, Sale, Customer
 
 class DForm(forms.ModelForm):
     class Meta:
@@ -13,3 +12,15 @@ class BForm(forms.ModelForm):
         db_table = 'inventory_bill'
         model = Bill
         fields = ('party', 'invoice', 'amount', 'bill_name')
+
+class CForm(forms.ModelForm):
+    class Meta:
+        db_table = 'sale_cust'
+        model = Customer
+        fields = ('name', 'phone', 'email')
+
+class SForm(forms.ModelForm):
+    class Meta:
+        db_table = 'sale'
+        model = Sale
+        fields = ('item_id', 'length', 'cust_id')

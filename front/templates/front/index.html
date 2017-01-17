@@ -12,7 +12,7 @@
             <div class="form-group">
                 <label for="party" class="control-label col-md-3">Party:</label>
                 <div class="col-md-4">
-                    <input type="text" class="form-control" name="party" id="party" placeholder="Party" required />
+                    <input autocomplete="off" type="text" class="form-control" name="party" id="party" placeholder="Party" required />
                 </div>
                 <div class="col-md-5">
                     <span id="one" style="position:relative; top:5px; color:red "></span>
@@ -21,7 +21,7 @@
             <div class="form-group">
                 <label for="invoice" class="control-label col-md-3">Invoice#:</label>
                 <div class="col-md-4">
-                    <input type="number" class="form-control" name="invoice" id="invoice" placeholder="Invoice" required />
+                    <input autocomplete="off" type="number" class="form-control" name="invoice" id="invoice" placeholder="Invoice" required />
                 </div>
                 <div class="col-md-5">
                     <span id="two" style="position:relative; top:5px; color:red "></span>
@@ -30,22 +30,21 @@
             <div class="form-group">
                 <label for="amount" class="control-label col-md-3">Amount:</label>
                 <div class="col-md-4">
-                    <input type="number" class="form-control" name="amount"
-                                                              id="amount" placeholder="Amount" required />
+                    <input autocomplete="off" type="number" class="form-control" name="amount"
+                    min="1" id="amount" placeholder="Amount" required />
                 </div>
                 <div class="col-md-5">
                     <span id="three" style="position:relative; top:5px; color:red "></span>
                 </div>
             </div>
             <div class="form-group">
-                <label for="bill_image" class="control-label col-md-3">Bill
-                    Image:</label>
+                <label for="bill_image" class="control-label col-md-3">Bill Image:</label>
                 <div class="col-md-4">
-                    <input type="file" class="form-control" name="bill_image" id="bill_image"
+                    <input autocomplete="off" type="file" class="form-control" name="bill_image" id="bill_image"
                                                               accept="image/*" placeholder="Bill Image" required />
                 </div>
                 <div class="col-md-5">
-                    <span id="three" style="position:relative; top:5px; color:red "></span>
+                    <span id="four" style="position:relative; top:5px; color:red "></span>
                 </div>
             </div>
         </form>
@@ -64,7 +63,7 @@
                 <div class="form-group">
                     <label for="desc" class="control-label col-md-3">Description:</label>
                     <div class="col-md-4">
-                        <input type="text" class="form-control" name="desc" id="desc" placeholder="Description" required />
+                        <input autocomplete="off" type="text" class="form-control" name="desc" id="desc" placeholder="Description" required />
                     </div>
                     <div class="col-md-5">
                         <span id="one" style="position:relative; top:5px; color:red "></span>
@@ -73,37 +72,39 @@
                 <div class="form-group">
                     <label for="bill" class="control-label col-md-3">Bill:</label>
                     <div class="col-md-4">
-                        <input type="number" class="form-control" name="bill" id="bill" placeholder="BILL" required />
+                        <input autocomplete="off" type="number" class="form-control" name="bill" id="bill" placeholder="BILL" required />
                     </div>
                     <div class="col-md-5">
                         <span id="two" style="position:relative; top:5px; color:red "></span>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="length" class="control-label col-md-3">Length:</label>
+                    <label for="length" class="control-label col-md-3">Length(m):</label>
                     <div class="col-md-4">
-                        <input type="number" class="form-control" name="length" id="length" placeholder="Length" required />
+                        <input autocomplete="off" type="number" class="form-control" name="length"
+                        id="length" min="0" placeholder="Length (m)" required />
                     </div>
                     <div class="col-md-5">
                         <span id="three" style="position:relative; top:5px; color:red "></span>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="Quality" class="control-label col-md-3">Quality:</label>
+                    <label for="quality" class="control-label col-md-3">Quality:</label>
                     <div class="col-md-4">
-                        <input type="text" class="form-control" name="quality" id="quality" placeholder="Quality" required />
+                        <input autocomplete="off" type="text" class="form-control" name="quality" id="quality" placeholder="Quality" required />
                     </div>
                     <div class="col-md-5">
                         <span id="four" style="position:relative; top:5px; color:red "></span>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="Rate" class="control-label col-md-3">Rate:</label>
+                    <label for="rate" class="control-label col-md-3">Rate:</label>
                     <div class="col-md-4">
-                        <input type="number" class="form-control" name="rate" id="rate" placeholder="Rate" required />
+                        <input autocomplete="off" type="number" class="form-control" name="rate"
+                        id="rate" min="1" placeholder="Rate" required />
                     </div>
                     <div class="col-md-5">
-                        <span id="four" style="position:relative; top:5px; color:red "></span>
+                        <span id="five" style="position:relative; top:5px; color:red "></span>
                     </div>
                 </div>
             </form>
@@ -197,3 +198,4 @@
             });
         </script>
     </body>
+</html>

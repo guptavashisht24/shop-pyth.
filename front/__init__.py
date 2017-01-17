@@ -10,3 +10,4 @@ if cache.get('today') is None or cache.get('today') != date_today:
     cache.set('today', date_today, None)
     cache.set('bill', 0, None)
     cache.set('description', 0, None)
+    cache.set('sale', 0, None)

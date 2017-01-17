@@ -6,4 +6,4 @@ create user 'virtualrahul'@'localhost' identified by 'password'
 grant all privileges on shop.* to 'virtualrahul'@'localhost';
  
                            OR
-tweak the database settings in shop/settings.py accordingly, but be sure to run migrate!
+tweak the database settings in shop/settings.py accordingly, but be sure to run migrate and create cachetable

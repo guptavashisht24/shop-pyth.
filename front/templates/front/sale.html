@@ -1,0 +1,238 @@
+{% load staticfiles %}
+<html>
+    <head>
+
+        <title>Pbd</title>
+        <link href="{%static "./styles/bootstrap.min.css" %}" rel="stylesheet" />
+    </head>
+    <body>
+        <h1 style="text-align: center;">Rahul's Shop</h1>
+        <h2 style="text-align: center;">Sale</h2>
+        <form id="cust" action ="{% url 'front:commitcust' %}" method = "post" class="form-horizontal"> {% csrf_token %}
+            <div class="form-group">
+                <label for="phone" class="control-label col-md-3">Phone#:</label>
+                <div class="col-md-4">
+                    <input autocomplete="off" type="number" class="form-control" name="phone"
+                    id="phone" maxlength=10 placeholder="Phone#" required />
+                </div>
+                <div class="col-md-5">
+                    <span id="two" style="position:relative; top:5px; color:red
+                        ">*</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="name" class="control-label col-md-3">Customer Name:</label>
+                <div class="col-md-4">
+                    <input autocomplete="off" type="text" class="form-control" name="name" id="name" placeholder="Customer Name" required />
+                </div>
+                <div class="col-md-5">
+                    <span id="one" style="position:relative; top:5px; color:red
+                        ">*</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="email" class="control-label col-md-3">Email:</label>
+                <div class="col-md-4">
+                    <input autocomplete="off" type="email" class="form-control" name="email"
+                    id="email" placeholder="Email" />
+                </div>
+                <div class="col-md-5">
+                    <span id="three" style="position:relative; top:5px; color:red "></span>
+                </div>
+            </div>
+        </form>
+        <div class="container">
+            <div class="row">
+                <input type="button" id="add_items" class="col-md-offset-5 col-md-2  btn btn-success" value="Add items" \>
+            </div>
+        </div>
+        <div id="items" style="margin-top: 50px;" class="container">
+            <form id="item0" action ="{% url 'front:commitsale' %}" method = "post" class="form-horizontal" style="border-top:1px solid black;">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label class="control-label col-md-3">Item 1</label>
+                </div>
+                <div class="form-group">
+                    <label for="item_id" class="control-label col-md-3">Item ID:</label>
+                    <div class="col-md-4">
+                        <input autocomplete="off" type="number" class="form-control" name="item_id" id="item_id" placeholder="Item ID" required />
+                    </div>
+                    <div class="col-md-5">
+                        <span id="one" style="position:relative; top:5px;
+                            color:red ">*</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="length" class="control-label col-md-3">Length(m):</label>
+                    <div class="col-md-4">
+                        <input autocomplete="off" type="number" class="form-control" name="length" id="length" min="0" placeholder="Length (m)" required />
+                    </div>
+                    <div class="col-md-5">
+                        <span id="two" style="position:relative; top:5px;
+                            color:red ">*</span>
+                    </div>
+                </div>
+                <span data="Description:" style="font-weight:700; font-size:14px color:#333" id="desc" class="col-md-3"></span>
+                <span data="Quality:" style="font-weight:700; font-size:14px color:#333" id="quality" class="col-md-3"></span>
+                <span data="Rate:" style="font-weight:700; font-size:14px color:#333" id="rate" class="col-md-3"></span>
+                <br>
+            </form>
+        </div>
+        <div class="container">
+            <div class="row">
+                <button id="submit" class="col-md-offset-5 col-md-2 btn btn-success">Submit </button>
+            </div>
+        </div>
+        <script src="{%static "scripts/jquery-2.1.4.min.js" %}"></script>
+        <script src="{%static "scripts/bootstrap.min.js" %}"></script>
+        <script type="text/javascript" charset="utf-8">
+            var count = 1;
+            $("#add_items").click(function(){
+                $("#items").prepend($("#item0").clone().attr("id","item"+count));
+                $($("#item"+count+" label")[0]).html("Item "+(count+1));
+                $("#item"+count+" input").val(undefined);
+                $("#item"+count+" span").html("");
+
+                itemOnBlur(count);
+                count++;
+            });
+
+            function itemOnBlur(item_id)
+            {
+                $("#item"+item_id+" #item_id").blur(function(){
+                    form = $($($(this).parent()).parent()).parent()[0];
+                    spans = $("#"+form.id+" span");
+                    $.ajax({
+                        type: "get",
+                        url: "sale/item/"+this.value,
+                        success: function(data)
+                        {
+                            if(data == "Fail")
+                            {
+                                console.log(data);
+                                return false;
+                            }
+                            data = data.replace(/'/g,"\"")
+                                data = JSON.parse(data)
+                                for (i = 0; i < spans.length; i++)
+                                {
+                                    idd = spans[i].id;
+                                    if(data[idd] != undefined)
+                                        $(spans[i]).html($(spans[i]).attr("data")+" "+data[idd]);
+                                }
+                        }
+                    })
+                });
+            }
+
+            itemOnBlur(0);
+
+            var cust_id = undefined;
+
+            $("#cust #phone").blur(function(){
+                inputs = $("#cust input");
+                cust_id = this.value;
+                $.ajax({
+                    type: "get",
+                    url: "sale/cust/phone/"+this.value,
+                    success: function(data)
+                    {
+                        if(data == "Fail")
+                        {
+                            cust_id = undefined;
+                            return false;
+                            }
+                        data = data.replace(/'/g,"\"")
+                            data = JSON.parse(data)
+                            for (i = 0; i < inputs.length; i++)
+                            {
+                                idd = inputs[i].id;
+                                if(data[idd] != undefined)
+                                    $(inputs[i]).val(data[idd]);
+                            }
+                    }
+                })
+            });
+
+            var flag = 0;
+            $("#submit").click(function(){
+                inputs = $("input");
+
+                for (i = 0; i < inputs.length; i++)
+                {
+                    if(inputs[i].required && inputs[i].value=="" && inputs[i].name!="bill")
+                    {
+                        $(inputs[i]).css("border","1px solid red");
+                        flag = 1;
+                    }
+                }
+
+                if (flag)
+                    return false;
+
+                flag = 0;
+
+                frm_cust = $('#cust');
+                if(cust_id != undefined)
+                {
+                    billSubmit();
+                    return true;
+                }
+                $.ajax({
+                    type: frm_cust.attr('method'),
+                    url: frm_cust.attr('action'),
+                    data: frm_cust.serialize(),
+                    success: function (data)
+                    {
+                        cust_id = +data;
+                        billSubmit();
+                    },
+                    error: function(data)
+                    {
+                        console.log(data);
+                    }
+                });
+
+                function billSubmit()
+                {
+                    item_ids = [];
+                    lengths = [];
+
+                    for(i = 0; i < count; i++)
+                    {
+                        frm = $("#item"+i);
+                        item_ids.push( $(frm[0].item_id).val() );
+                        lengths.push( $(frm[0].length).val() );
+                    }
+                    item_data = new FormData();
+                    item_data.append('cust_id', cust_id);
+                    item_data.append('item_id', item_ids.join(","));
+                    item_data.append('length', lengths.join(","));
+                    item_data.append($("#cust input")[0].name, $("#cust input")[0].value);
+                    $.ajax({
+                        type: frm.attr('method'),
+                        url: frm.attr('action'),
+                        data: item_data,
+                        processData: false,
+                        contentType: false,
+                        success: function (data)
+                        {
+                            console.log(data);
+                            //frm.remove();
+                        },
+                        error: function(data)
+                        {
+                            flag = 1;
+                        }
+                    })
+
+                    if(!flag)
+                    {
+                        //frm_cust.remove();
+                        //$("#submit").remove();
+                    }
+                }
+            });
+        </script>
+    </body>
+</html>
