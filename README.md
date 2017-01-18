@@ -22,17 +22,6 @@ python manage.py runserver
     * Comment out code in front/__init__py and re-run, then remove comments and
 runserver
 
-### Bug
-* db_cache is used to maintain counters for ID generation in tables. The incr()
-    method for cached value sale resets timer.
-
-### TODO
-* Make a landing page
-* Beautify bill generation
-* Make page for analytics purpose
-* Integrate a bar-code generator
-* Integrate a bar code-reader
-
 ### Sample usage
 * Goto /front
     * Fill out the form
@@ -48,3 +37,16 @@ You have added stock for the first time now. Let's conduct a sale.
     * Enter length
     * Hit submit to generate bill
     * You can always use the "Add items" option for more items
+
+### TODO
+* Make a landing page
+* Beautify bill generation
+* Make page for analytics purpose
+* Integrate a bar-code generator
+* Integrate a bar code-reader
+
+### Bug
+* db_cache is used to maintain counters for ID generation in tables. The incr()
+    method for cached value sale resets timer.
+    * Looks like it's a bug in django
+    * **HACK** Replaced incr with a set()

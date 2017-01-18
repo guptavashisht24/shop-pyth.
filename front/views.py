@@ -29,7 +29,7 @@ def commitsale(request):
         if form.is_valid():
             sale = form.save(commit=False)
             new_id = cache.get('today')+str(cache.get('sale'))
-            cache.incr('sale')
+            cache.set('sale',int(str(cache.get('sale')))+1, None)
             sale.id = new_id
             sale.save()
             return HttpResponse(new_id)
@@ -67,7 +67,7 @@ def commitvalues(request):
         if form.is_valid():
             description = form.save(commit=False)
             new_id = cache.get('today')+str(cache.get('description'))
-            cache.incr('description')
+            cache.set('description',int(str(cache.get('description')))+1, None)
             description.id = new_id
             description.save()
             return HttpResponse(new_id)
@@ -82,7 +82,7 @@ def commitbill(request):
             new_id = cache.get('today')+str(cache.get('bill'))
             handle_uploaded_image(new_id, request.FILES['bill_image'])
             bill = form.save(commit=False)
-            cache.incr('bill')
+            cache.set('bill',int(str(cache.get('bill')))+1, None)
             bill.id = new_id
             bill.save()
             return HttpResponse(new_id)
