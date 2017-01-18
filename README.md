@@ -30,3 +30,21 @@ runserver
 * Make a landing page
 * Beautify bill generation
 * Make page for analytics purpose
+* Integrate a bar-code generator
+* Integrate a bar code-reader
+
+### Sample usage
+* Goto /front
+    * Fill out the form
+    * Hitting submit shows item ids (lookout for'em)
+        * Note these!
+You have added stock for the first time now. Let's conduct a sale.
+
+* Goto /front/sale
+    * Type customer info. If the customer is re-visiting, keying in phone number
+    should fill his name and optional email-id. Phone number is important
+    * Now key in the item-id. Currently this is manual, but actually would be
+    happening by a bar/QR code generator
+    * Enter length
+    * Hit submit to generate bill
+    * You can always use the "Add items" option for more items
