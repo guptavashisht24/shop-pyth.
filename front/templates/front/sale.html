@@ -1,8 +1,7 @@
 {% load staticfiles %}
 <html>
     <head>
-
-        <title>Pbd</title>
+        <title></title>
         <link href="{%static "./styles/bootstrap.min.css" %}" rel="stylesheet" />
     </head>
     <body>
@@ -83,28 +82,52 @@
                 <button id="submit" class="col-md-offset-5 col-md-2 btn btn-success">Submit </button>
             </div>
         </div>
+        <table id="invoice" class="table" style="width:500px;">
+            <caption></caption>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Description</th>
+                    <th>Length</th>
+                    <th>Rate</th>
+                    <th>Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr id="tr0"> </tr>
+            </tbody>
+        </table>
         <script src="{%static "scripts/jquery-2.1.4.min.js" %}"></script>
         <script src="{%static "scripts/bootstrap.min.js" %}"></script>
         <script type="text/javascript" charset="utf-8">
             var count = 1;
+            var cust_id = undefined;
+            var table = {
+                'table': $("table"),
+                'tbody': $("table tbody"),
+                'caption': $("table caption"),
+                'tr': [$("tbody tr")]
+            };
+
             $("#add_items").click(function(){
                 $("#items").prepend($("#item0").clone().attr("id","item"+count));
                 $($("#item"+count+" label")[0]).html("Item "+(count+1));
                 $("#item"+count+" input").val(undefined);
                 $("#item"+count+" span").html("");
+                table.tbody.append("<tr id=\"tr"+count+"\"></tr>");
+                table['tr'].push($("tbody #tr"+count));
 
                 itemOnBlur(count);
                 count++;
             });
 
-            function itemOnBlur(item_id)
-            {
+            function itemOnBlur(item_id) {
                 $("#item"+item_id+" #item_id").blur(function(){
                     form = $($($(this).parent()).parent()).parent()[0];
                     spans = $("#"+form.id+" span");
                     $.ajax({
                         type: "get",
-                        url: "sale/item/"+this.value,
+                        url: "item/"+this.value,
                         success: function(data)
                         {
                             if(data == "Fail")
@@ -112,14 +135,17 @@
                                 console.log(data);
                                 return false;
                             }
-                            data = data.replace(/'/g,"\"")
-                                data = JSON.parse(data)
-                                for (i = 0; i < spans.length; i++)
+                            data = data.replace(/'/g,"\"");
+                            data = JSON.parse(data);
+                            for (i = 0; i < spans.length; i++)
+                            {
+                                idd = spans[i].id;
+                                if(data[idd] != undefined)
                                 {
-                                    idd = spans[i].id;
-                                    if(data[idd] != undefined)
-                                        $(spans[i]).html($(spans[i]).attr("data")+" "+data[idd]);
+                                    $(spans[i]).html($(spans[i]).attr("data")+" "+data[idd]);
+                                    $(spans[i]).attr("data-value",data[idd]);
                                 }
+                            }
                         }
                     })
                 });
@@ -127,21 +153,20 @@
 
             itemOnBlur(0);
 
-            var cust_id = undefined;
 
             $("#cust #phone").blur(function(){
                 inputs = $("#cust input");
                 cust_id = this.value;
                 $.ajax({
                     type: "get",
-                    url: "sale/cust/phone/"+this.value,
+                    url: "cust/phone/"+this.value,
                     success: function(data)
                     {
                         if(data == "Fail")
                         {
                             cust_id = undefined;
                             return false;
-                            }
+                        }
                         data = data.replace(/'/g,"\"")
                             data = JSON.parse(data)
                             for (i = 0; i < inputs.length; i++)
@@ -197,6 +222,7 @@
                 {
                     item_ids = [];
                     lengths = [];
+                    bill_id = undefined;
 
                     for(i = 0; i < count; i++)
                     {
@@ -218,7 +244,9 @@
                         success: function (data)
                         {
                             console.log(data);
-                            //frm.remove();
+                            bill_id = data;
+                            generateBill(bill_id);
+                            frm.remove();
                         },
                         error: function(data)
                         {
@@ -228,11 +256,24 @@
 
                     if(!flag)
                     {
-                        //frm_cust.remove();
-                        //$("#submit").remove();
+                        frm_cust.remove();
+                        $("#submit").remove();
                     }
                 }
             });
+
+            function generateBill(bill_id){
+                $('table caption').html("Invoice ID:"+bill_id);
+                $('#add_items').remove();
+                for(i = 0; i < count; i++)
+                {
+                    table['tr'][i].append("<th>"+(i+1)+"</th>");
+                    table['tr'][i].append("<td>"+$("#item"+i+" #desc").attr('data-value')+"<br>("+$("#item"+i+" #quality").attr('data-value')+")</td>");
+                    table['tr'][i].append("<td>"+$("#item"+i+" #length").val()+"</td>");
+                    table['tr'][i].append("<td>"+$("#item"+i+" #rate").attr('data-value')+"</td>");
+                    table['tr'][i].append("<td>"+ +$("#item"+i+" #rate").attr('data-value')* +$("#item"+i+" #length").val()+"</td>");
+                }
+            }
         </script>
     </body>
 </html>

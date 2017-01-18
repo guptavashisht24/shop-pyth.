@@ -27,11 +27,11 @@ def commitsale(request):
     if request.method == "POST":
         form = SForm(request.POST)
         if form.is_valid():
-            sale = form.save()
+            sale = form.save(commit=False)
             new_id = cache.get('today')+str(cache.get('sale'))
             cache.incr('sale')
-            print new_id, sale.id
-            Sale.objects.filter(pk=sale.id).update(id=int(new_id))
+            sale.id = new_id
+            sale.save()
             return HttpResponse(new_id)
         print form.errors
         return HttpResponse("Fail Form")
@@ -65,10 +65,11 @@ def commitvalues(request):
     if request.method == "POST":
         form = DForm(request.POST)
         if form.is_valid():
-            description = form.save()
+            description = form.save(commit=False)
             new_id = cache.get('today')+str(cache.get('description'))
             cache.incr('description')
-            Description.objects.filter(pk=description.id).update(id=int(new_id))
+            description.id = new_id
+            description.save()
             return HttpResponse(new_id)
         print form.errors
         return HttpResponse("Fail")
@@ -80,9 +81,10 @@ def commitbill(request):
         if form.is_valid():
             new_id = cache.get('today')+str(cache.get('bill'))
             handle_uploaded_image(new_id, request.FILES['bill_image'])
-            bill = form.save()
+            bill = form.save(commit=False)
             cache.incr('bill')
-            Bill.objects.filter(pk=bill.id).update(id=int(new_id))
+            bill.id = new_id
+            bill.save()
             return HttpResponse(new_id)
         print form.errors
         return HttpResponse("fail")
