@@ -1,0 +1,28 @@
+{% load staticfiles %}
+<html>
+    <head>
+
+        <title>Manglam Textiles</title>
+        <link href="{%static "./styles/bootstrap.min.css" %}" rel="stylesheet" />
+    </head>
+    <body>
+        <form action = "{% url 'front:home' %}" >
+            
+                    <input type="submit" id="submit" class="col-md-2 btn btn-success" value="Home"/>
+        </form>
+        <div id="content">
+        {% block content %}{% endblock %}
+
+
+
+
+
+        </div>
+        <script src="{%static "scripts/jquery-2.1.4.min.js" %}"></script>
+        <script src="{%static "scripts/bootstrap.min.js" %}"></script>
+    </body>
+</html>
+
+
+
+

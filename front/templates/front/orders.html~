@@ -1,0 +1,13 @@
+{% extends base.html %}
+{% block content %}
+{% if cust %}
+    <ul>
+    {% for var in cust %}
+        <li>INVOICE ID: {{ var.item_id }},{{var.length}}</li>
+    {% endfor %}
+    </ul>
+
+{% else %}
+    <p>No Sales for this customer are available.</p>
+{% endif %}
+{% endblock %}

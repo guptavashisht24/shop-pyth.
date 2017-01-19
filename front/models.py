@@ -15,7 +15,7 @@ class Description(models.Model):
     rate = models.FloatField(max_length=200)
 
     def __str__(self):
-        return self.desc+","+self.quality+","+self.rate
+        return self.desc+","+self.quality+","+str(self.rate)
 
 class Bill(models.Model):
     id = models.BigAutoField(primary_key=True)

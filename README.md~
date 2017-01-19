@@ -1,0 +1,60 @@
+INSTALL qrcode 5.0 on your machine!
+
+Errors:
+Bill QR code is not being displayed on Bill;Adjacent to bill table; Earlier It showed 404 error, but thanks to django Template inheritance; that, and the image(unfortunately) are gone!
+Template inheritance FUCKS UP your javascript!!!
+
+Everything else is fine
+
+# shop-pyth.
+This is for a shop management system with inventory and sales management
+features in-built and carries an analytics platform.
+
+### Setup
+```SQL
+create database shop;
+use shop;
+create user 'virtualrahul'@'localhost' identified by 'password'
+grant all privileges on shop.* to 'virtualrahul'@'localhost';
+```
+
+```bash
+python manage.py makemigrations
+python manage.py migrate
+python manage.py createcachetable
+python manage.py runserver
+```
+
+#### Errors
+* You might get error in createcachetable.
+    * Comment out code in front/__init__py and re-run, then remove comments and
+runserver
+
+### Sample usage
+* Goto /front
+    * Fill out the form
+    * Hitting submit shows item ids (lookout for'em)
+        * Note these!
+You have added stock for the first time now. Let's conduct a sale.
+
+* Goto /front/sale
+    * Type customer info. If the customer is re-visiting, keying in phone number
+    should fill his name and optional email-id. Phone number is important
+    * Now key in the item-id. Currently this is manual, but actually would be
+    happening by a bar/QR code generator
+    * Enter length
+    * Hit submit to generate bill
+    * You can always use the "Add items" option for more items
+
+### TODO
+* Make a landing page
+* Beautify bill generation
+* Make page for analytics purpose
+* Integrate a bar-code generator
+* Integrate a bar code-reader
+
+### Bug
+* db_cache is used to maintain counters for ID generation in tables. The incr()
+    method for cached value sale resets timer.
+    * Looks like it's a bug in django
+    * **HACK** Replaced incr with a set()

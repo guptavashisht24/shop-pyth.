@@ -1,0 +1,11 @@
+{% if cust %}
+    <ul>
+    {% for question in cust %}
+        <li>{{ cust.item_id }},{{cust.length}}</li>
+    {% endfor %}
+    </ul>
+
+{% else %}
+    <p>No Sales for this customer are available.</p>
+{% endif %}
+

@@ -1,0 +1,31 @@
+{% load staticfiles %}
+<html>
+    <head>
+
+        <title>Manglam Textiles</title>
+        <link href="{%static "./styles/bootstrap.min.css" %}" rel="stylesheet" />
+    </head>
+    <body>
+        <form action = "{% url 'front:home' %}" >
+            
+                    <input type="submit" id="submit" class="col-md-2 btn btn-success" value="Home"/>
+        </form>
+        <br />
+        <br />
+        <br />
+        <br />
+        
+        {% block content %}{% endblock %}
+
+
+
+
+
+       
+        
+    </body>
+</html>
+
+
+
+

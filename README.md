@@ -1,3 +1,13 @@
+INSTALL qrcode 5.0 on your machine!
+
+Errors:
+Bill QR code is not being displayed on Bill;Adjacent to bill table; Earlier It showed 404 error, but thanks to django Template inheritance; that, and the image(unfortunately) are gone!
+Template inheritance FUCKS UP your javascript!!!
+
+Everything else is fine.
+USE the home URL to start:
+(front/home/)
+
 # shop-pyth.
 This is for a shop management system with inventory and sales management
 features in-built and carries an analytics platform.

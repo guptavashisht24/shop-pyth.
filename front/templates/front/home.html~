@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block content %}
+
+        <h1 style="text-align: center;">Welcome</h1>
+        <h2 style="text-align: center;">Rahul Gupta</h2>
+        <h2 style="text-align: center;">Select An option:</h2>
+             <form action = "{% url 'front:index' %}" >
+            
+                    <input type="submit" id="submit" class="col-md-offset-5 col-md-2 btn btn-success" value="Inventory Product Registration"/>
+             </form>
+             <br >
+             <form action = "{% url 'front:sale' %}" >
+            
+                    <input type="submit" id="submit" class="col-md-offset-5 col-md-2 btn btn-success" value="Sell a Product"/>
+             </form>
+             <br>
+             <br>
+ 
+
+<form role="form" action ="{% url 'front:phoney' %}" method = "get">
+   {% csrf_token %}
+  <div class="form-group">
+    <label for="Phone number">Enter Phone number to search customer</label>
+    <input autocomplete="off" type="number" class="form-control col-md-3" name="phone_num" id="phone_num" value="phone_num" placeholder="Enter Customer Phone number for search" required />
+   
+  </div>
+  <button type="submit" class="btn btn-primary">Search</button>
+</form>
+
+<form role="form" action ="{% url 'front:viewitems' %}" method = "get">
+   {% csrf_token %}
+  <div class="form-group">
+    <label for="Phone number">Enter itemID to search in INVENTORY</label>
+    <input autocomplete="off" type="number" class="form-control col-md-3" name="itemid" id="itemid" value="itemid" placeholder="Enter ITEM ID to search" required />
+   
+  </div>
+  <button type="submit" class="btn btn-primary">Search</button>
+</form>
+
+
+<form role="form" action ="{% url 'front:custbill' %}" method = "get">
+   {% csrf_token %}
+  <div class="form-group">
+    <label for="Phone number">Enter Phone number to search customer's purchases</label>
+    <input autocomplete="off" type="number" class="form-control col-md-3" name="phone_num" id="phone_num" value="phone_num" placeholder="Enter Customer Phone number for search" required />
+   
+  </div>
+  <button type="submit" class="btn btn-primary">Search</button>
+</form>
+
+              
+{% endblock %}
