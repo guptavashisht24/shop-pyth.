@@ -123,6 +123,7 @@ def commitvalues(request):
             cache.set('description',int(str(cache.get('description')))+1, None)
             description.id = new_id
             description.save()
+            '''
             descr = form.cleaned_data['desc']
             billr = form.cleaned_data['bill']
             lengthr = form.cleaned_data['length']
@@ -135,6 +136,7 @@ def commitvalues(request):
    
         
             img.save('front/media/tests.png','PNG')
+            '''
             return HttpResponse(new_id)
         print form.errors
         return HttpResponse("Fail")
