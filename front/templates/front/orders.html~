@@ -1,4 +1,43 @@
-{% extends base.html %}
+{% extends "base.html" %}
+{% block content %}
+
+    <table id="invoice" class="table-bordered" style="width:500px; color:green">
+            <caption></caption>
+            {% if cust %}
+            <thead>
+                <tr>
+                    <th>Invoice_ID</th>
+                    <th>Length</th>
+                </tr>
+            </thead>
+            
+            <tbody>
+           {% for var in cust %}
+               <tr>
+                    <td>{{ var.item_id }}</td>
+                    <td>{{ var.length }}</td>
+               </tr>
+           {% endfor %}
+            </tbody>
+              
+        </table>
+           
+    
+
+           {% else %}
+           <p>No Sales for this Customer are available.</p>
+           {% endif %}
+{% endblock %}
+
+
+
+
+
+
+
+
+<!--
+{% extends "base.html" %}
 {% block content %}
 {% if cust %}
     <ul>
@@ -11,3 +50,4 @@
     <p>No Sales for this customer are available.</p>
 {% endif %}
 {% endblock %}
+-->

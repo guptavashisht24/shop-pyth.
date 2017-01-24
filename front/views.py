@@ -10,6 +10,34 @@ def home(request):
     #Link for Landing Page
     context = {}
     return render(request,'front/home.html',context)
+def purchasedate(request):
+    if request.method=="GET":
+     try:
+         date = str(request.GET['dates'])
+         print type(date)
+         ids = date.split("-")
+         search = "".join(ids[::-1])
+         cust = Bill.objects.filter(id__startswith=search)
+         context = {'cust' : cust }
+         
+     except Bill.DoesNotExist:
+         raise Http404("NO PURCHASE ON THE GIVEN DATE EXISTS")
+     return render(request,'front/purch.html',context)
+def custdate(request):
+    if request.method=="GET":
+     try:
+         date = str(request.GET['dates'])
+         print type(date)
+         ids = date.split("-")
+         search = "".join(ids[::-1])
+         cust = Sale.objects.filter(item_id__startswith=search)
+         context = {'cust' : cust }
+         
+     except Sale.DoesNotExist:
+         raise Http404("NO SALE ON THE GIVEN DATE EXISTS")
+     return render(request,'front/date.html',context)
+
+
 def index(request):
     context = {}
     return render(request, 'front/index.html', context)
@@ -78,7 +106,9 @@ def cust_phone(request, phone):
     if request.method == "GET":
 
         try:
-            cust = Customer.objects.get(pk=phone)
+            #get returns a single object;use filter for multiple returns!
+            #cust = Customer.objects.get(pk=phone)
+            cust = Customer.objects.filter(pk=phone)
             dd = {"name":str(cust.name), "email":str(cust.email)}
             return HttpResponse(str(dd))
         except:

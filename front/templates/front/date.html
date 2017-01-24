@@ -6,7 +6,7 @@
             {% if cust %}
             <thead>
                 <tr>
-                    <th>Invoice_ID</th>
+                    <th>Customer_ID</th>
                     <th>Length</th>
                 </tr>
             </thead>
@@ -14,7 +14,7 @@
             <tbody>
            {% for var in cust %}
                <tr>
-                    <td>{{ var.item_id }}</td>
+                    <td>{{ var.cust_id }}</td>
                     <td>{{ var.length }}</td>
                </tr>
            {% endfor %}
@@ -25,9 +25,11 @@
     
 
            {% else %}
-           <p>No Sales for this Customer are available.</p>
+           <p>No Sales for this Date are available.</p>
            {% endif %}
 {% endblock %}
+
+
 
 
 

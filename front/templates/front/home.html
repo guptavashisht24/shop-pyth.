@@ -47,7 +47,26 @@
    
   </div>
   <button type="submit" class="btn btn-primary">Search</button>
+</form> 
+
+<form role="form" action = "{% url 'front:custdate' %}" method="get">
+ {% csrf_token %}
+ <div class =  "form-group">
+  <label for="Date">Enter Date, to search for Sales made on that day</label>
+  <input autocomplete="off" type="date" class="form-control col-md-3" name = "dates" id="dates" value="dates" placeholder="dd/mm/yyyy" required/>
+ </div>
+ <button type="submit" class="btn btn-primary">Search</button>
 </form>
+
+<form role="form" action = "{% url 'front:purchasedate' %}" method="get">
+ {% csrf_token %}
+ <div class =  "form-group">
+  <label for="Date">Enter Date, to search for purchases made on that day</label>
+  <input autocomplete="off" type="date" class="form-control col-md-3" name = "dates" id="dates" value="dates" placeholder="dd/mm/yyyy" required/>
+ </div>
+ <button type="submit" class="btn btn-primary">Search</button>
+</form>
+
 
               
 {% endblock %}

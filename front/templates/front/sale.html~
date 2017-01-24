@@ -258,14 +258,14 @@
                     table['tr'][i].append("<td>"+$("#item"+i+" #length").val()+"</td>");
                     table['tr'][i].append("<td>"+$("#item"+i+" #rate").attr('data-value')+"</td>");
                     table['tr'][i].append("<td>"+ +$("#item"+i+" #rate").attr('data-value')* +$("#item"+i+" #length").val()+"</td>");
-                    var a = document.createElement("img");
+                    /*var a = document.createElement("img");
                     var c = static_url;
                     var d = ".png";
                     var e = (c.concat(String(bill_id))).concat(d);
                     a.src = e;
                     a.height = 100;
                     a.width = 100;
-                    document.body.appendChild(a);
+                    document.body.appendChild(a);*/
                 }
             }
         </script>

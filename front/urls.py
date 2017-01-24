@@ -6,6 +6,8 @@ urlpatterns = [
     url(r'^$', views.index, name='index'),
     url(r'^home/$',views.home, name='home'),
     url(r'^sale/$', views.sale, name='sale'),
+    url(r'^sale/date/$',views.custdate, name="custdate"),
+    url(r'^purchase/date/$',views.purchasedate, name="purchasedate"),
     url(r'^sale/item/([0-9]+)/$', views.item),
     url(r'^sale/cust/phone/([0-9]+)/$', views.cust_phone),
     url(r'^sale/bills/$', views.custbill, name='custbill'),
