@@ -77,6 +77,25 @@
                 <br>
             </form>
         </div>
+        <form id="amount-form">
+            <div class="container form-group">
+                <label style="text-align:right;" for="tax" class="control-label col-md-3">Tax:</label>
+                <div class="col-md-4">
+                    <input autocomplete="off" type="number" class="form-control" name="tax" id="tax" min="0" value="0" placeholder="Tax" required />
+                </div>
+                <div class="col-md-5">
+                    <span style="position:relative; top:5px; color:red ">*</span>
+                </div>
+            </div>
+            <div id="discount" class="btn-group row col-md-offset-5" data-toggle="buttons">
+                <label class="btn btn-inactive"> Discounts </label> 
+                {% for var in disc %}
+                <label class="btn btn-primary">
+                    <input type="radio" name="options" data="{{var}}" id="option{{var}}" autocomplete="off"> {{var}}%
+                </label>
+                {% endfor %}
+            </div>
+        </form>
         <div class="container">
             <div class="row">
                 <button id="submit" class="col-md-offset-5 col-md-2 btn btn-success">Submit </button>
@@ -228,6 +247,14 @@
                         console.log(data);
                     }
                 });
+
+                function isChecked()
+                {
+                    if (this.checked == true)
+                        return true;
+                    return false;
+                }
+
                 function billSubmit()
                 {
                     item_ids = [];
@@ -253,6 +280,8 @@
                     item_data.append('cust_id', cust_id);
                     item_data.append('item_id', item_ids.join(","));
                     item_data.append('length', lengths.join(","));
+                    item_data.append('tax', $('#tax').val());
+                    item_data.append('discount', +$($('input[type=radio]').filter(isChecked)[0]).attr('data'));
                     item_data.append($("#cust input")[0].name, $("#cust input")[0].value);
                     $.ajax({
                         type: frm.attr('method'),

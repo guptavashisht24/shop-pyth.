@@ -43,6 +43,15 @@ class Sale(models.Model):
     item_id = models.CharField(max_length=1000)
     length = models.CharField(max_length=1000)
     cust_id = models.BigIntegerField()
+    discount = models.IntegerField(default=0)
+    tax = models.IntegerField(default=0)
 
     def __str__(self):
         return self.item_id+":"+self.length
+
+class Discount(models.Model):
+    value = models.IntegerField(default = 0, primary_key=True)
+    count = models.IntegerField(default = 0)
+
+    def __str__(self):
+        return str(self.value)+","+str(self.count)

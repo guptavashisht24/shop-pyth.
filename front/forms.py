@@ -23,4 +23,4 @@ class SForm(forms.ModelForm):
     class Meta:
         db_table = 'sale'
         model = Sale
-        fields = ('item_id', 'length', 'cust_id')
+        fields = ('item_id', 'length', 'cust_id', 'discount', 'tax')
