@@ -72,16 +72,26 @@ def commitsale(request):
     if request.method == "POST":
         form = SForm(request.POST)
         if form.is_valid():
-            idr = form.cleaned_data['item_id']
-            lengthr = form.cleaned_data['length']
-            custidr = form.cleaned_data['cust_id']
-            qrdata = str(idr)+"\n"+str(lengthr)+"\n"+str(custidr)+"\n"
-            img = qrcode.make(qrdata)
+
+            #idr = form.cleaned_data['item_id']
+            #lengthr = form.cleaned_data['length']
+            #custidr = form.cleaned_data['cust_id']
+            #qrdata = str(idr)+"\n"+str(lengthr)+"\n"+str(custidr)+"\n"
+            #img = qrcode.make(qrdata)
             
             sale = form.save(commit=False)
             new_id = cache.get('today')+str(cache.get('sale'))
-            var = "front/templates/front/Billimg/"+str(new_id)+".png"
-            img.save(var,'PNG')
+            #var = "front/templates/front/Billimg/"+str(new_id)+".png"
+            #img.save(var,'PNG')
+
+            item_id = sale.item_id.split(",")
+            length = sale.length.split(",")
+
+            for i in range(0, len(item_id)):
+                desc = Description.objects.get(id=item_id[i])
+                desc.length -= int(length[i])
+                desc.save()
+
             cache.set('sale',int(str(cache.get('sale')))+1, None)
             sale.id = new_id
             sale.save()
@@ -121,7 +131,7 @@ def item(request, itemID):
 
         try:
             desc = Description.objects.get(pk=itemID)
-            dd = {"desc":str(desc.desc), "quality":str(desc.quality), "rate":str(desc.rate)}
+            dd = {"desc":str(desc.desc), "quality":str(desc.quality), "rate":str(desc.rate), "length":str(desc.length)}
             return HttpResponse(str(dd))
         except:
             return HttpResponse("Fail")
