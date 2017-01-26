@@ -5,7 +5,6 @@
         <link href="{%static "./styles/bootstrap.min.css" %}" rel="stylesheet" />
     </head>
     <body>
-        
         <h1 style="text-align: center;">Rahul's Shop</h1>
         <h2 style="text-align: center;">Sale</h2>
         <form id="cust" action ="{% url 'front:commitcust' %}" method = "post" class="form-horizontal"> {% csrf_token %}
@@ -178,7 +177,7 @@
                 $("#item"+item_id+" #length").change(function(){
 
                     $("#item"+item_id+" #two").html("*");
-                    if( this.max == "" || this.value > this.max || this.value < this.min)
+                    if( this.max == "" || +this.value > +this.max || +this.value < +this.min)
                     {
                         $("#item"+item_id+" #two").html("Length exceeding or too less");
                         $("#item"+item_id).attr("data-length","0");

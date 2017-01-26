@@ -1,33 +1,22 @@
 {% load staticfiles %}
 <html>
     <head>
-
         <title>Manglam Textiles</title>
         <link href="{%static "./styles/bootstrap.min.css" %}" rel="stylesheet" />
     </head>
-    <body>
+    <body class="container">
         <form action = "{% url 'front:home' %}" >
-            
-                    <input type="submit" id="submit" class="col-md-2 btn btn-success" value="Home"/>
+            <input type="submit" id="submit" class="col-md-2 btn btn-success" value="Home"/>
         </form>
-        <br />
-        <br />
-        <br />
-        <br />
-        
-        {% block content %}{% endblock %}
+            <br>
+            <br>
+            <br>
+            <br>
 
+            {% block content %}{% endblock %}
 
-
-
-
-       
-       <footer class="navbar-fixed-bottom">
-         EMERGENCY CONTACTS: VG 9012345687;PBD : 9660581998
-        </footer> 
+            <footer class="navbar-fixed-bottom">
+                EMERGENCY CONTACTS: VG 9012345687;PBD : 9660581998
+            </footer> 
     </body>
 </html>
-
-
-
-

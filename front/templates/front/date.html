@@ -6,16 +6,22 @@
             {% if cust %}
             <thead>
                 <tr>
-                    <th>Customer_ID</th>
+                    <th>Item ID</th>
+                    <th>Customer ID</th>
                     <th>Length</th>
+                    <th>Discount</th>
+                    <th>Tax</th>
                 </tr>
             </thead>
             
             <tbody>
            {% for var in cust %}
                <tr>
+                    <td>{{ var.item_id }}</td>
                     <td>{{ var.cust_id }}</td>
                     <td>{{ var.length }}</td>
+                    <td>{{ var.discount }}</td>
+                    <td>{{ var.tax }}</td>
                </tr>
            {% endfor %}
             </tbody>

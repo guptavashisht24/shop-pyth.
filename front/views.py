@@ -37,7 +37,7 @@ def custdate(request):
             print type(date)
             ids = date.split("-")
             search = "".join(ids[::-1])
-            cust = Sale.objects.filter(item_id__startswith=search)
+            cust = Sale.objects.filter(id__startswith=search)
             context = {'cust' : cust}
             return render(request, 'front/date.html', context)
         except Sale.DoesNotExist:
@@ -100,6 +100,10 @@ def commitsale(request):
                 desc = Description.objects.get(id=item_id[i])
                 desc.length -= int(length[i])
                 desc.save()
+
+            disc = Discount.objects.get(pk=sale_form.discount)
+            disc.count -= 1
+            disc.save()
 
             cache.set('sale', int(str(cache.get('sale')))+1, None)
             sale_form.id = new_id
