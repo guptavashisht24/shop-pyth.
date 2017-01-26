@@ -4,70 +4,58 @@
 <h2 style="text-align: center;">Rahul Gupta</h2>
 <h2 style="text-align: center;">Select An option:</h2>
 
-<form action = "{% url 'front:index' %}" class="form-horizontal">
-    <input type="submit" id="submit" class="col-md-offset-5 col-md-2 btn btn-success" value="Inventory Product Registration"/>
-</form>
-<br >
-
-<form action = "{% url 'front:sale' %}" class="form-horizontal">
-    <input type="submit" id="submit" class="col-md-offset-5 col-md-2 btn btn-success" value="Sell a Product"/>
-</form>
-
-<br>
-<br>
-
-<form action ="{% url 'front:phoney' %}" method = "get" class="form-horizontal">
+<form action ="sale/cust/phone/" method = "get" class="form-horizontal">
     {% csrf_token %}
     <div class="form-group">
         <label class="control-label col-md-3" for="phone_num">Phone#</label>
         <div class="col-md-4">
             <input autocomplete="off" type="number" class="form-control" name="phone_num" id="phone_num" placeholder="Get customer info" required />
         </div>
-        <button type="submit" class="btn btn-primary">Search</button>
+        <button class="btn btn-primary" data-toggle="modal" data-target="#myModal">Search</button>
     </div>
 </form>
 
-<form role="form" action ="{% url 'front:viewitems' %}" method = "get" class="form-horizontal">
+<form action ="sale/item/" method = "get" class="form-horizontal">
     {% csrf_token %}
     <div class="form-group">
         <label class="control-label col-md-3" for="Phone number">Item ID</label>
         <div class="col-md-4">
             <input autocomplete="off" type="number" class="form-control col-md-3" name="itemid" id="itemid" placeholder="Get item info" required />
         </div>
-        <button type="submit" class="btn btn-primary">Search</button>
+        <button class="btn btn-primary" data-toggle="modal" data-target="#myModal">Search</button>
     </div>
 </form>
 
-<form role="form" action ="{% url 'front:custbill' %}" method = "get" class="form-horizontal">
+<form action ="sale/bills/" method = "get" class="form-horizontal">
     {% csrf_token %}
     <div class="form-group">
         <label class="control-label col-md-3" for="Phone number">Phone#</label>
         <div class="col-md-4">
             <input autocomplete="off" type="number" class="form-control col-md-3" name="phone_num" id="phone_num" placeholder="Get customer's purchases" required />
         </div>
-        <button type="submit" class="btn btn-primary">Search</button>
+        <button class="btn btn-primary" data-toggle="modal" data-target="#myModal">Search</button>
     </div>
 </form> 
 
-<form role="form" action = "{% url 'front:custdate' %}" method="get" class="form-horizontal">
+<form action = "sale/date/" method="get" class="form-horizontal">
     {% csrf_token %}
     <div class =  "form-group">
         <label class="control-label col-md-3" for="Date">Date (Sales)</label>
         <div class="col-md-4">
-            <input autocomplete="off" type="date" class="form-control col-md-3" name = "dates" id="dates" placeholder="dd/mm/yyyy" required/>
+            <input autocomplete="off" type="date" class="form-control col-md-3" name = "dates" id="dates" required/>
         </div>
-        <button type="submit" class="btn btn-primary">Search</button>
+        <button class="btn btn-primary" data-toggle="modal" data-target="#myModal">Search</button>
     </div>
 </form>
 
-<form role="form" action = "{% url 'front:purchasedate' %}" method="get" class="form-horizontal">
+<form action = "purchase/date/" method="get" class="form-horizontal">
     {% csrf_token %}
     <div class= "form-group">
         <label class="control-label col-md-3" for="Date">Date (Inventory purchase)</label>
         <div class="col-md-4">
-            <input autocomplete="off" type="date" class="form-control col-md-3" name = "dates" id="dates" placeholder="dd/mm/yyyy" required/>
+            <input autocomplete="off" type="date" class="form-control col-md-3" name = "dates" id="dates" required/>
         </div>
-        <button type="submit" class="btn btn-primary">Search</button>
+        <button class="btn btn-primary" data-toggle="modal" data-target="#myModal">Search</button>
     </div>
 </form>
 

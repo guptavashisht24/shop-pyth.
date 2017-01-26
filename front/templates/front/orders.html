@@ -1,39 +1,24 @@
-{% extends "base.html" %}
-{% block content %}
+<table id="invoice" class="table-bordered" style="width:500px; color:green">
+    <caption></caption>
+    {% if cust %}
+    <thead>
+        <tr>
+            <th>Invoice_ID</th>
+            <th>Length</th>
+        </tr>
+    </thead>
 
-    <table id="invoice" class="table-bordered" style="width:500px; color:green">
-            <caption></caption>
-            {% if cust %}
-            <thead>
-                <tr>
-                    <th>Invoice_ID</th>
-                    <th>Length</th>
-                </tr>
-            </thead>
-            
-            <tbody>
-           {% for var in cust %}
-               <tr>
-                    <td>{{ var.item_id }}</td>
-                    <td>{{ var.length }}</td>
-               </tr>
-           {% endfor %}
-            </tbody>
-              
-        </table>
-           
-    
+    <tbody>
+        {% for var in cust %}
+        <tr>
+            <td>{{ var.item_id }}</td>
+            <td>{{ var.length }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
 
-           {% else %}
-           <p>No Sales for this Customer are available.</p>
-           {% endif %}
-{% endblock %}
+</table>
 
-
-
-
-
-
-
-
-
+{% else %}
+<p>No Sales for this Customer are available.</p>
+{% endif %}

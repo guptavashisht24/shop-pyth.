@@ -1,6 +1,7 @@
 '''
 Views for the app
 '''
+from django.template.loader import render_to_string
 from django.shortcuts import render
 from django.http import HttpResponse, Http404
 from django.core.cache import cache
@@ -15,31 +16,29 @@ def home(request):
     context = {}
     return render(request, 'front/home.html', context)
 
-def purchasedate(request):
+def purchasedate(request, date):
     '''Stats'''
     if request.method == "GET":
         try:
-            date = str(request.GET['dates'])
-            print type(date)
             ids = date.split("-")
             search = "".join(ids[::-1])
             cust = Bill.objects.filter(id__startswith=search)
             context = {'cust' : cust}
-            return render(request, 'front/purch.html', context)
+            return HttpResponse(render_to_string('front/purch.html', context))
+            #return render(request, 'front/purch.html', context)
         except Bill.DoesNotExist:
             raise Http404("NO PURCHASE ON THE GIVEN DATE EXISTS")
     raise Http404("Only GET supported")
-def custdate(request):
+
+def custdate(request, date):
     '''Stats'''
     if request.method == "GET":
         try:
-            date = str(request.GET['dates'])
-            print type(date)
             ids = date.split("-")
             search = "".join(ids[::-1])
             cust = Sale.objects.filter(id__startswith=search)
             context = {'cust' : cust}
-            return render(request, 'front/date.html', context)
+            return HttpResponse(render_to_string('front/date.html', context))
         except Sale.DoesNotExist:
             raise Http404("NO SALE ON THE GIVEN DATE EXISTS")
     raise Http404("Only GET supported")
@@ -54,14 +53,14 @@ def sale(request):
     context = {'disc':discount()}
     return render(request, 'front/sale.html', context)
 
-def custbill(request):
+def custbill(request, phone):
     '''Get customer info'''
     if request.method == "GET":
         try:
-            phone = request.GET['phone_num']
+            print phone
             cust = Sale.objects.filter(cust_id=phone)
             context = {'cust': cust}
-            return render(request, 'front/orders.html', context)
+            return HttpResponse(render_to_string('front/orders.html', context))
         except Customer.DoesNotExist:
             raise Http404("No Sale for the customer exists")
     raise Http404("Only GET supported")
@@ -113,11 +112,10 @@ def commitsale(request):
         return HttpResponse("Fail Form")
     raise Http404("Only POST supported")
 
-def items(request):
+def items(request, itemID):
     '''fetch item info'''
     if request.method == "GET":
         try:
-            #itemID = request.GET['itemid']
             desc = Description.objects.get(pk=itemID)
             item_desc = {"desc":str(desc.desc), "quality":str(desc.quality), "rate":str(desc.rate)}
             return HttpResponse(str(item_desc))
@@ -145,11 +143,9 @@ def item(request, itemID):
             return HttpResponse("Fail")
     raise Http404("Only GET supported")
 
-def cust_phones(request):
+def cust_phones(request, phone):
     if request.method == "GET":
         try:
-            phone = request.GET['phone_num']
-            print phone
             cust = Customer.objects.get(pk=phone)
             cust_desc = {"name":str(cust.name), "email":str(cust.email)}
             return HttpResponse(str(cust_desc))
