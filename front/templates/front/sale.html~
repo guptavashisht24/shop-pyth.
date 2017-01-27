@@ -5,7 +5,40 @@
         <link href="{%static "./styles/bootstrap.min.css" %}" rel="stylesheet" />
     </head>
     <body>
-        
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand active" href="{% url 'front:home' %}">Mangalam Textiles<span class="sr-only">(current)</span></a>
+                </div>
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li>
+                            <a href="{% url 'front:home' %}">Home</a>
+                        </li>
+                        <li>
+                            <a href="{% url 'front:index' %}">Inventory</a>
+                        </li>
+                        <li class="active">
+                            <a href="{% url 'front:sale' %}">Sale</a>
+                        </li>
+                        <li>
+                            <a href="/howto/">How does it work?</a>
+                        </li>
+                    </ul>
+                </div><!-- /.navbar-collapse -->
+            </div><!-- /.container-fluid -->
+        </nav>
+        <br>
+        <br>
         <h1 style="text-align: center;">Rahul's Shop</h1>
         <h2 style="text-align: center;">Sale</h2>
         <form id="cust" action ="{% url 'front:commitcust' %}" method = "post" class="form-horizontal"> {% csrf_token %}
@@ -26,8 +59,7 @@
                     <input autocomplete="off" type="text" class="form-control" name="name" id="name" placeholder="Customer Name" required />
                 </div>
                 <div class="col-md-5">
-                    <span id="one" style="position:relative; top:5px; color:red
-                        ">*</span>
+                    <span id="one" style="position:relative; top:5px; color:red">*</span>
                 </div>
             </div>
             <div class="form-group">
@@ -47,7 +79,8 @@
             </div>
         </div>
         <div id="items" style="margin-top: 50px;" class="container">
-            <form id="item0" action ="{% url 'front:commitsale' %}" method = "post" class="form-horizontal" style="border-top:1px solid black;">
+            <form id="item0" action ="{% url 'front:commitsale' %}" method =
+                "post" class="form-horizontal" style="border-top:1px solid black;" data-itemid="0" data-length="0">
                 {% csrf_token %}
                 <div class="form-group">
                     <label class="control-label col-md-3">Item 1</label>
@@ -58,8 +91,7 @@
                         <input autocomplete="off" type="number" class="form-control" name="item_id" id="item_id" placeholder="Item ID" required />
                     </div>
                     <div class="col-md-5">
-                        <span id="one" style="position:relative; top:5px;
-                            color:red ">*</span>
+                        <span id="one" style="position:relative; top:5px; color:red ">*</span>
                     </div>
                 </div>
                 <div class="form-group">
@@ -72,12 +104,31 @@
                             color:red ">*</span>
                     </div>
                 </div>
-                <span data="Description:" style="font-weight:700; font-size:14px color:#333" id="desc" class="col-md-3"></span>
-                <span data="Quality:" style="font-weight:700; font-size:14px color:#333" id="quality" class="col-md-3"></span>
-                <span data="Rate:" style="font-weight:700; font-size:14px color:#333" id="rate" class="col-md-3"></span>
+                <span class="item-value col-md-3" data="Description:" style="font-weight:700; font-size:14px color:#333" id="desc" ></span>
+                <span class="item-value col-md-3" data="Quality:" style="font-weight:700; font-size:14px color:#333" id="quality"  ></span>
+                <span class="item-value col-md-3" data="Rate:" style="font-weight:700; font-size:14px color:#333" id="rate"        ></span>
                 <br>
             </form>
         </div>
+        <form id="amount-form">
+            <div class="container form-group">
+                <label style="text-align:right;" for="tax" class="control-label col-md-3">Tax:</label>
+                <div class="col-md-4">
+                    <input autocomplete="off" type="number" class="form-control" name="tax" id="tax" min="0" value="0" placeholder="Tax" required />
+                </div>
+                <div class="col-md-5">
+                    <span style="position:relative; top:5px; color:red ">*</span>
+                </div>
+            </div>
+            <div id="discount" class="btn-group row col-md-offset-5" data-toggle="buttons">
+                <label class="btn btn-inactive"> Discounts </label> 
+                {% for var in disc %}
+                <label class="btn btn-primary">
+                    <input type="radio" name="options" data="{{var}}" id="option{{var}}" autocomplete="off"> {{var}}%
+                </label>
+                {% endfor %}
+            </div>
+        </form>
         <div class="container">
             <div class="row">
                 <button id="submit" class="col-md-offset-5 col-md-2 btn btn-success">Submit </button>
@@ -98,11 +149,20 @@
                 <tr id="tr0"> </tr>
             </tbody>
         </table>
+        <br>
+        <br>
+        <br>
+        <footer class="footer">
+            <div class="container">
+                <p class="text-muted">EMERGENCY CONTACTS: VG 9012345687;PBD : 9660581998</p>
+            </div>
+        </footer>
         <script src="{%static "scripts/jquery-2.1.4.min.js" %}"></script>
         <script src="{%static "scripts/bootstrap.min.js" %}"></script>
         <script type="text/javascript" charset="utf-8">
             var count = 1;
             var cust_id = undefined;
+            var flag = 0;
             var table = {
                 'table': $("table"),
                 'tbody': $("table tbody"),
@@ -117,12 +177,14 @@
                 table.tbody.append("<tr id=\"tr"+count+"\"></tr>");
                 table['tr'].push($("tbody #tr"+count));
                 itemOnBlur(count);
+                lengthOnChange(count);
                 count++;
             });
-            function itemOnBlur(item_id) {
+            function itemOnBlur(item_id){
                 $("#item"+item_id+" #item_id").blur(function(){
-                    form = $($($(this).parent()).parent()).parent()[0];
-                    spans = $("#"+form.id+" span");
+                    spans = $("#item"+item_id+" span");
+                    $("#item"+item_id+" #one").html("*");
+
                     $.ajax({
                         type: "get",
                         url: "item/"+this.value,
@@ -130,9 +192,13 @@
                         {
                             if(data == "Fail")
                             {
+                                $("#item"+item_id+" #one").html("* item not found");
+                                $("#item"+item_id).attr("data-itemid","0");
                                 console.log(data);
                                 return false;
                             }
+
+                            $("#item"+item_id).attr("data-itemid","1");
                             data = data.replace(/'/g,"\"");
                             data = JSON.parse(data);
                             for (i = 0; i < spans.length; i++)
@@ -144,11 +210,26 @@
                                     $(spans[i]).attr("data-value",data[idd]);
                                 }
                             }
+                            $("#item"+item_id+" #length").attr("max",data.length);
                         }
                     })
                 });
             }
+            function lengthOnChange(item_id){
+                $("#item"+item_id+" #length").change(function(){
+
+                    $("#item"+item_id+" #two").html("*");
+                    if( this.max == "" || +this.value > +this.max || +this.value < +this.min)
+                    {
+                        $("#item"+item_id+" #two").html("Length exceeding or too less");
+                        $("#item"+item_id).attr("data-length","0");
+                    }
+                    else
+                        $("#item"+item_id).attr("data-length","1");
+                });
+            }
             itemOnBlur(0);
+            lengthOnChange(0);
             $("#cust #phone").blur(function(){
                 inputs = $("#cust input");
                 cust_id = this.value;
@@ -162,20 +243,20 @@
                             cust_id = undefined;
                             return false;
                         }
-                        data = data.replace(/'/g,"\"")
-                            data = JSON.parse(data)
-                            for (i = 0; i < inputs.length; i++)
-                            {
-                                idd = inputs[i].id;
-                                if(data[idd] != undefined)
-                                    $(inputs[i]).val(data[idd]);
-                            }
+                        data = data.replace(/'/g,"\"");
+                        data = JSON.parse(data);
+                        for (i = 0; i < inputs.length; i++)
+                        {
+                            idd = inputs[i].id;
+                            if(data[idd] != undefined)
+                                $(inputs[i]).val(data[idd]);
+                        }
                     }
                 })
             });
-            var flag = 0;
             $("#submit").click(function(){
                 inputs = $("input");
+                flag = 0;
                 for (i = 0; i < inputs.length; i++)
                 {
                     if(inputs[i].required && inputs[i].value=="" && inputs[i].name!="bill")
@@ -207,6 +288,14 @@
                         console.log(data);
                     }
                 });
+
+                function isChecked()
+                {
+                    if (this.checked == true)
+                        return true;
+                    return false;
+                }
+
                 function billSubmit()
                 {
                     item_ids = [];
@@ -215,6 +304,16 @@
                     for(i = 0; i < count; i++)
                     {
                         frm = $("#item"+i);
+                        if( +frm.attr("data-itemid") == 0)
+                        {
+                            $("#item"+i+" #one").html("Wrong item_id in field");
+                            return false;
+                        }
+                        if( +frm.attr("data-length") == 0)
+                        {
+                            $("#item"+i+" #two").html("Wrong length in field");
+                            return false;
+                        }
                         item_ids.push( $(frm[0].item_id).val() );
                         lengths.push( $(frm[0].length).val() );
                     }
@@ -222,6 +321,8 @@
                     item_data.append('cust_id', cust_id);
                     item_data.append('item_id', item_ids.join(","));
                     item_data.append('length', lengths.join(","));
+                    item_data.append('tax', $('#tax').val());
+                    item_data.append('discount', +$($('input[type=radio]').filter(isChecked)[0]).attr('data'));
                     item_data.append($("#cust input")[0].name, $("#cust input")[0].value);
                     $.ajax({
                         type: frm.attr('method'),
@@ -258,14 +359,7 @@
                     table['tr'][i].append("<td>"+$("#item"+i+" #length").val()+"</td>");
                     table['tr'][i].append("<td>"+$("#item"+i+" #rate").attr('data-value')+"</td>");
                     table['tr'][i].append("<td>"+ +$("#item"+i+" #rate").attr('data-value')* +$("#item"+i+" #length").val()+"</td>");
-                    /*var a = document.createElement("img");
-                    var c = static_url;
-                    var d = ".png";
-                    var e = (c.concat(String(bill_id))).concat(d);
-                    a.src = e;
-                    a.height = 100;
-                    a.width = 100;
-                    document.body.appendChild(a);*/
+                    
                 }
             }
         </script>

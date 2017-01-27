@@ -16,13 +16,16 @@ def home(request):
     context = {}
     return render(request, 'front/home.html', context)
 
-def purchasedate(request, date):
+def purchasedate(request, date1, date2):
     '''Stats'''
     if request.method == "GET":
         try:
-            ids = date.split("-")
-            search = "".join(ids[::-1])
-            cust = Bill.objects.filter(id__startswith=search)
+            ids1 = date1.split("-")
+            search1 = "".join(ids1[::-1])
+            ids2 = date2.split("-")
+            ids2[-1] = str(int(ids2[-1])+1)
+            search2 = "".join(ids2[::-1])
+            cust = Bill.objects.filter(id__gte=search1+"0", id__lt=search2+"0")
             context = {'cust' : cust}
             return HttpResponse(render_to_string('front/purch.html', context))
             #return render(request, 'front/purch.html', context)
@@ -30,13 +33,16 @@ def purchasedate(request, date):
             raise Http404("NO PURCHASE ON THE GIVEN DATE EXISTS")
     raise Http404("Only GET supported")
 
-def custdate(request, date):
+def custdate(request, date1, date2):
     '''Stats'''
     if request.method == "GET":
         try:
-            ids = date.split("-")
-            search = "".join(ids[::-1])
-            cust = Sale.objects.filter(id__startswith=search)
+            ids1 = date1.split("-")
+            search1 = "".join(ids1[::-1])
+            ids2 = date2.split("-")
+            ids2[-1] = str(int(ids2[-1])+1)
+            search2 = "".join(ids2[::-1])
+            cust = Sale.objects.filter(id__gte=search1+"0", id__lt=search2+"0")
             context = {'cust' : cust}
             return HttpResponse(render_to_string('front/date.html', context))
         except Sale.DoesNotExist:

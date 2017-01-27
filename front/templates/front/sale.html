@@ -30,6 +30,9 @@
                         <li class="active">
                             <a href="{% url 'front:sale' %}">Sale</a>
                         </li>
+                        <li>
+                            <a href="/howto/">How does it work?</a>
+                        </li>
                     </ul>
                 </div><!-- /.navbar-collapse -->
             </div><!-- /.container-fluid -->
@@ -356,14 +359,7 @@
                     table['tr'][i].append("<td>"+$("#item"+i+" #length").val()+"</td>");
                     table['tr'][i].append("<td>"+$("#item"+i+" #rate").attr('data-value')+"</td>");
                     table['tr'][i].append("<td>"+ +$("#item"+i+" #rate").attr('data-value')* +$("#item"+i+" #length").val()+"</td>");
-                    /*var a = document.createElement("img");
-                    var c = static_url;
-                    var d = ".png";
-                    var e = (c.concat(String(bill_id))).concat(d);
-                    a.src = e;
-                    a.height = 100;
-                    a.width = 100;
-                    document.body.appendChild(a);*/
+                    
                 }
             }
         </script>
