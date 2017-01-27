@@ -73,7 +73,7 @@
                 frm = $(this);
                 $.ajax({
                         type: 'get',
-                        url: frm.attr('action')+$('.form-group input',this).val(),
+                        url: frm.attr('action')+$('.form-group input',this).val()+ ($('.form-group input',this)[1] == undefined ?  '': '/'+$('.form-group input',this)[1].value),
                         success: function (data)
                         {
                             $('.modal-body').html(data)
