@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% block content %}
+<h1 style="text-align: center;">Welcome</h1>
+<h2 style="text-align: center;">Rahul Gupta</h2>
+<h2 style="text-align: center;">Select An option:</h2>
+
+<form action ="sale/cust/phone/" method = "get" class="form-horizontal">
+    {% csrf_token %}
+    <div class="form-group">
+        <label class="control-label col-md-3" for="phone_num">Phone#</label>
+        <div class="col-md-4">
+            <input autocomplete="off" type="number" class="form-control" name="phone_num" id="phone_num" placeholder="Get customer info" required />
+        </div>
+        <button class="btn btn-primary" data-toggle="modal" data-target="#myModal">Search</button>
+    </div>
+</form>
+
+<form action ="sale/item/" method = "get" class="form-horizontal">
+    {% csrf_token %}
+    <div class="form-group">
+        <label class="control-label col-md-3" for="Phone number">Item ID</label>
+        <div class="col-md-4">
+            <input autocomplete="off" type="number" class="form-control col-md-3" name="itemid" id="itemid" placeholder="Get item info" required />
+        </div>
+        <button class="btn btn-primary" data-toggle="modal" data-target="#myModal">Search</button>
+    </div>
+</form>
+
+<form action ="sale/cust/" method = "get" class="form-horizontal">
+    {% csrf_token %}
+    <div class="form-group">
+        <label class="control-label col-md-3" for="Party">Party(phone)</label>
+        <div class="col-md-4">
+            <input autocomplete="off" type="number" class="form-control col-md-3" name="party" id="party" placeholder="Get party info" required />
+        </div>
+        <button class="btn btn-primary" data-toggle="modal" data-target="#myModal">Search</button>
+    </div>
+</form>
+
+<form action ="sale/bills/" method = "get" class="form-horizontal">
+    {% csrf_token %}
+    <div class="form-group">
+        <label class="control-label col-md-3" for="Phone number">Phone#</label>
+        <div class="col-md-4">
+            <input autocomplete="off" type="number" class="form-control col-md-3" name="phone_num" id="phone_num" placeholder="Get customer's purchases" required />
+        </div>
+        <button class="btn btn-primary" data-toggle="modal" data-target="#myModal">Search</button>
+    </div>
+</form> 
+
+<form action = "sale/date/" method="get" class="form-horizontal">
+    {% csrf_token %}
+    <div class =  "form-group">
+        <label class="control-label col-md-3" for="Date">Date (Sales)</label>
+        <div class="col-md-4">
+            <input autocomplete="off" type="date" class="form-control col-md-3" name = "dates1" id="dates1" required/>
+            <input autocomplete="off" type="date" class="form-control col-md-3" name = "dates2" id="dates2" required/>
+        </div>
+        <button class="btn btn-primary" data-toggle="modal" data-target="#myModal">Search</button>
+    </div>
+</form>
+
+<form action = "purchase/date/" method="get" class="form-horizontal">
+    {% csrf_token %}
+    <div class= "form-group">
+        <label class="control-label col-md-3" for="Date">Date (Inventory purchase)</label>
+        <div class="col-md-4">
+            <input autocomplete="off" type="date" class="form-control col-md-3" name = "dates1" id="dates1" required/>
+            <input autocomplete="off" type="date" class="form-control col-md-3" name = "dates2" id="dates2" required/>
+        </div>
+        <button class="btn btn-primary" data-toggle="modal" data-target="#myModal">Search</button>
+    </div>
+</form>
+
+{% endblock %}

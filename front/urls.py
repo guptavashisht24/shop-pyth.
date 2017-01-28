@@ -8,7 +8,8 @@ urlpatterns = [
     url(r'^sale/$', views.sale, name='sale'),
     url(r'^home/sale/date/([0-9-]+)/([0-9-]+)/$', views.custdate),
     url(r'^home/purchase/date/([0-9-]+)/([0-9-]+)/$', views.purchasedate),
-    url(r'^sale/item/([0-9]+)/$', views.item),
+    url(r'^home/sale/cust/([0-9]+)/$', views.itemparty),
+
     url(r'^sale/cust/phone/([0-9]+)/$', views.cust_phone),
     url(r'^home/sale/bills/([0-9]+)/$', views.custbill),
     url(r'^sale/cust/$', views.commitcust, name='commitcust'),

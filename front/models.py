@@ -20,6 +20,7 @@ class Description(models.Model):
 class Bill(models.Model):
     id = models.BigAutoField(primary_key=True)
     party = models.CharField(max_length=200, default="none")
+    phone = models.BigIntegerField(default = 0)
     invoice = models.FloatField(max_length=200)
     amount = models.FloatField(max_length=200)
     bill_name = models.CharField(max_length=200, default="none")

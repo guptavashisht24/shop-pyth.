@@ -11,7 +11,7 @@ class BForm(forms.ModelForm):
     class Meta:
         db_table = 'inventory_bill'
         model = Bill
-        fields = ('party', 'invoice', 'amount', 'bill_name')
+        fields = ('party', 'invoice','phone', 'amount', 'bill_name')
 
 class CForm(forms.ModelForm):
     class Meta:

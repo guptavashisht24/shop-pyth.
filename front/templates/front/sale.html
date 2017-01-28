@@ -39,8 +39,8 @@
         </nav>
         <br>
         <br>
-        <h1 style="text-align: center;">Rahul's Shop</h1>
-        <h2 style="text-align: center;">Sale</h2>
+        <h1 style="text-align: center;">Manglam Textiles</h1>
+        <h2 style="text-align: center;">Sale Invoice</h2>
         <form id="cust" action ="{% url 'front:commitcust' %}" method = "post" class="form-horizontal"> {% csrf_token %}
             <div class="form-group">
                 <label for="phone" class="control-label col-md-3">Phone#:</label>
@@ -114,7 +114,7 @@
             <div class="container form-group">
                 <label style="text-align:right;" for="tax" class="control-label col-md-3">Tax:</label>
                 <div class="col-md-4">
-                    <input autocomplete="off" type="number" class="form-control" name="tax" id="tax" min="0" value="0" placeholder="Tax" required />
+                    <input autocomplete="off" type="number" class="form-control" name="tax" id="tax" min="0" value="0" placeholder="Tax" step="0.01" required />
                 </div>
                 <div class="col-md-5">
                     <span style="position:relative; top:5px; color:red ">*</span>
@@ -124,7 +124,7 @@
                 <label class="btn btn-inactive"> Discounts </label> 
                 {% for var in disc %}
                 <label class="btn btn-primary">
-                    <input type="radio" name="options" data="{{var}}" id="option{{var}}" autocomplete="off"> {{var}}%
+                    <input type="radio" class = "desc" name="options" data="{{var}}" id="option{{var}}" autocomplete="off"> {{var}}%
                 </label>
                 {% endfor %}
             </div>
@@ -144,14 +144,29 @@
                     <th>Rate</th>
                     <th>Amount</th>
                 </tr>
+               
             </thead>
+            
             <tbody>
                 <tr id="tr0"> </tr>
             </tbody>
         </table>
+        
         <br>
         <br>
         <br>
+        <div id="A">
+          <h3>Amount: <p id="Amount"></p></h3>
+        </div>
+        <div id="B">
+          <h3>Discount: <p id="Discount"></p></h3>
+        </div>
+        <div id="C">
+          <h3>Tax: <p id="Taxes"></p></h3>
+        </div>
+        <div id="D">
+          <h3>Amount Payable: <p id="Final"></p></h3>
+        </div>
         <footer class="footer">
             <div class="container">
                 <p class="text-muted">EMERGENCY CONTACTS: VG 9012345687;PBD : 9660581998</p>
@@ -160,6 +175,13 @@
         <script src="{%static "scripts/jquery-2.1.4.min.js" %}"></script>
         <script src="{%static "scripts/bootstrap.min.js" %}"></script>
         <script type="text/javascript" charset="utf-8">
+            function isChecked()
+                {
+                    if (this.checked == true)
+                        return true;
+                    return false;
+                }
+
             var count = 1;
             var cust_id = undefined;
             var flag = 0;
@@ -255,6 +277,7 @@
                 })
             });
             $("#submit").click(function(){
+                
                 inputs = $("input");
                 flag = 0;
                 for (i = 0; i < inputs.length; i++)
@@ -289,13 +312,7 @@
                     }
                 });
 
-                function isChecked()
-                {
-                    if (this.checked == true)
-                        return true;
-                    return false;
-                }
-
+                
                 function billSubmit()
                 {
                     item_ids = [];
@@ -350,8 +367,15 @@
                 }
             });
             function generateBill(bill_id){
+                
                 $('table caption').html("Invoice ID:"+bill_id);
                 $('#add_items').remove();
+                var total,disc,tax,final;
+                total = 0.0;
+                disc = 0;
+                final = 0.0;
+                tax = document.getElementById("tax").value;
+                //disc = $('input[type=radio]').filter(isChecked)[0]).attr('data');
                 for(i = 0; i < count; i++)
                 {
                     table['tr'][i].append("<th>"+(i+1)+"</th>");
@@ -359,8 +383,19 @@
                     table['tr'][i].append("<td>"+$("#item"+i+" #length").val()+"</td>");
                     table['tr'][i].append("<td>"+$("#item"+i+" #rate").attr('data-value')+"</td>");
                     table['tr'][i].append("<td>"+ +$("#item"+i+" #rate").attr('data-value')* +$("#item"+i+" #length").val()+"</td>");
-                    
+                    total+= $("#item"+i+" #rate").attr('data-value')* +$("#item"+i+" #length").val();
                 }
+                
+                document.getElementById("Amount").innerHTML = total;
+                disc = ((($($('input[type=radio]').filter(isChecked)[0]).attr('data')))/100)*total;
+                document.getElementById("Discount").innerHTML = disc;
+                document.getElementById("Taxes").innerHTML = tax;
+                total = total-disc;
+                final = total + (total*(tax/100));
+                document.getElementById("Final").innerHTML = final;
+                
+                //console.log(total);
+                    
             }
         </script>
     </body>

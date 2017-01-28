@@ -3,16 +3,22 @@
     {% if cust %}
     <thead>
         <tr>
-            <th>Invoice_ID</th>
-            <th>Length</th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
         </tr>
     </thead>
 
     <tbody>
         {% for var in cust %}
         <tr>
-            <td>{{ var.item_id }}</td>
-            <td>{{ var.length }}</td>
+            <td>{{ var.id }}</td>
+            <td>{{ var.party }}</td>
+            <td>{{ var.phone }}</td>
+            <td>{{ var.invoice }}</td>
+            <td>{{ var.amount }}</td>
         </tr>
         {% endfor %}
     </tbody>

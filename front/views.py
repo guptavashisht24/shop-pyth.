@@ -16,6 +16,18 @@ def home(request):
     context = {}
     return render(request, 'front/home.html', context)
 
+def itemparty(request,name):
+    if request.method == "GET":
+        try:
+           cust = Bill.objects.filter(phone=name)
+           context = {'cust': cust}
+           return HttpResponse(render_to_string('front/bill.html', context))
+           
+        except:
+           raise Http404("NO PURCHASE ON THE GIVEN DATE EXISTS")
+        raise Http404("Only GET supported")
+
+
 def purchasedate(request, date1, date2):
     '''Stats'''
     if request.method == "GET":
